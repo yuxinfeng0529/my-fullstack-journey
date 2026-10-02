@@ -20,4 +20,12 @@ const router = createRouter({
   ],
 })
 
+// 配合 public/404.html：直接访问或刷新子路由时，
+// 404.html 会把原始路径存进 sessionStorage，这里取出来恢复。
+const redirect = sessionStorage.getItem('redirect')
+if (redirect) {
+  sessionStorage.removeItem('redirect')
+  router.replace(redirect)
+}
+
 export default router
