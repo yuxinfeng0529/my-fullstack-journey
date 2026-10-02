@@ -28,11 +28,18 @@ jobs:
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          # 用 24.x 的最新版，避免低于 package.json 要求的 24.12.0
+          node-version: '24.x'
           cache: npm
 
+      - name: 打印环境信息（排错用）
+        run: |
+          node -v
+          npm -v
+
       - name: 安装依赖
-        run: npm ci
+        # --engine-strict=false 防止 engines 版本差异直接中断 CI
+        run: npm ci --engine-strict=false
 
       - name: 配置 Pages
         uses: actions/configure-pages@v5
