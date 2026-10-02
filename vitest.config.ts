@@ -1,9 +1,11 @@
 import { fileURLToPath } from 'node:url'
 import { mergeConfig, defineConfig, configDefaults } from 'vitest/config'
-import viteConfig from './vite.config.ts'
+// 用 sharedConfig（普通对象）而不是默认导出的函数形式，
+// 否则 mergeConfig 会因类型不匹配报 TS2345。
+import { sharedConfig } from './vite.config.ts'
 
 export default mergeConfig(
-  viteConfig,
+  sharedConfig,
   defineConfig({
     test: {
       environment: 'jsdom',
